@@ -56,4 +56,18 @@ describe('routes: twitter', () => {
         });
     });
   });
+
+  describe('GET /tweets', () => {
+    it('should receive a response with a list containing 100 of my most recent tweets', done => {
+      chai.request(server)
+        .get('/tweets')
+        .end((error, response) => {
+          should.not.exist(error);
+          response.status.should.eql(200);
+          response.type.should.eql('application/json');
+          response.body.data.to.be.an('array');
+          done();
+        });
+    });
+  });
 });
