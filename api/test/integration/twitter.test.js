@@ -7,7 +7,7 @@ const server = require('../../server');
 
 describe('routes: twitter', () => {
   describe('GET /oauth_request', () => {
-    it('should have a error message', done => {
+    it('should have an error message', done => {
       chai.request(server)
         .get('/oauth_request')
         .end((error, response) => {
@@ -31,12 +31,12 @@ describe('routes: twitter', () => {
   });
 
   describe('POST /connect', () => {
-    it('should receive a response with all my Twitter profile data', done => {
+    it('should have an error message', done => {
       chai.request(server)
         .post('/connect')
         .end((error, response) => {
           error.status.should.eql(422);
-          response.body.error.should.have.string('You need to pass the callback param.');
+          response.body.error.should.have.string('You need to pass the oauth_token AND oauth_verifier data.');
           done();
         });
     });
@@ -44,9 +44,14 @@ describe('routes: twitter', () => {
     it('should receive a response with all my Twitter profile data', done => {
       chai.request(server)
         .post('/connect')
+        .send({
+          'oauth_token': 'NPcudxy0yU5T3tBzho7iCotZ3cnetKwcTIRlX0iwRl0',
+          'oauth_verifier': 'uw7NjWHT6OJ1MpJOXsHfNxoAhPKpgI8BlYDhxEjIBY'
+        })
         .end((error, response) => {
-          error.status.should.eql(422);
-          response.body.error.should.have.string('You need to pass the callback param.');
+          response.status.should.eql(200);
+          response.type.should.eql('application/json');
+          response.body.data.should.have.string('screen_name');
           done();
         });
     });

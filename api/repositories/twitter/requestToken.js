@@ -17,7 +17,9 @@ module.exports = (callback) => {
 
     const url = 'https://api.twitter.com/oauth/request_token';
     const method = 'post';
-    const authorizationHeader = generateOauthHeader(url, method, callback);
+    const authorizationHeader = generateOauthHeader(url, method, {
+      oauth_callback: encodeURIComponent(callback)
+    });
 
     request({
       url,
