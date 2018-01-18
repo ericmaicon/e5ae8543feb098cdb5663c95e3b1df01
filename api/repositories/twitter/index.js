@@ -4,5 +4,6 @@ module.exports = {
   generateSignature: require('./generateSignature'),
   getAccessToken: require('./getAccessToken'),
   requestToken: require('./requestToken'),
+  timeline: require('./timeline'),
   verifyCredentials: require('./verifyCredentials'),
 };

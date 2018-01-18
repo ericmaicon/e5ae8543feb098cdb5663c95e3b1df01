@@ -61,6 +61,7 @@ describe('routes: twitter', () => {
     it('should receive a response with a list containing 100 of my most recent tweets', done => {
       chai.request(server)
         .get('/tweets')
+        .set('oauth_token', 'UkM5UQAAAAAA4EWgAAABYQb5rDU')
         .end((error, response) => {
           should.not.exist(error);
           response.status.should.eql(200);

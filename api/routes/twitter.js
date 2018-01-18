@@ -1,4 +1,4 @@
-const { requestToken, verifyCredentials } = require('../repositories/twitter/');
+const { requestToken, verifyCredentials, timeline } = require('../repositories/twitter/');
 
 module.exports = (app, router) => {
   //GET oauth_request
@@ -34,6 +34,24 @@ module.exports = (app, router) => {
     const credentialData = await verifyCredentials(oauth_token, oauth_verifier);
     context.body = {
       data: credentialData
+    };
+  });
+
+  //GET /tweets
+  router.get('/tweets', async function (context) {
+    const oauth_token = context.headers['oauth_token'];
+
+    if (!oauth_token) {
+      context.status = 422;
+      context.body = {
+        error: 'You need to pass the oauth_token in oauth_token header.'
+      };
+      return;
+    }
+
+    const tweets = await timeline(oauth_token);
+    context.body = {
+      data: tweets
     };
   });
 };
