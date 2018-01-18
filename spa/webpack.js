@@ -5,6 +5,7 @@ import ExtendedDefinePlugin from 'extended-define-webpack-plugin';
 
 export default {
   entry: [
+    'babel-polyfill',
     'webpack-hot-middleware',
     path.join(__dirname, '/src/index.js'),
   ],

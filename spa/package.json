@@ -7,7 +7,10 @@
     "start": "./node_modules/.bin/nodemon --watch server --exec babel-node -- server.js"
   },
   "dependencies": {
+    "axios": "^0.17.1",
+    "babel-polyfill": "^6.26.0",
     "bootstrap": "next",
+    "lodash": "^4.17.4",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
