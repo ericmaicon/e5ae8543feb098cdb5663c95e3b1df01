@@ -16,4 +16,7 @@ module.exports = (app, router) => {
       data: `http://twitter.com/oauth/authorize?oauth_token=${oauthToken}`
     };
   });
+
+  //POST /connect
+
 };

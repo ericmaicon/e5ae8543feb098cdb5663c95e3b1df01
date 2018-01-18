@@ -29,4 +29,26 @@ describe('routes: twitter', () => {
         });
     });
   });
+
+  describe('POST /connect', () => {
+    it('should receive a response with all my Twitter profile data', done => {
+      chai.request(server)
+        .post('/connect')
+        .end((error, response) => {
+          error.status.should.eql(422);
+          response.body.error.should.have.string('You need to pass the callback param.');
+          done();
+        });
+    });
+
+    it('should receive a response with all my Twitter profile data', done => {
+      chai.request(server)
+        .post('/connect')
+        .end((error, response) => {
+          error.status.should.eql(422);
+          response.body.error.should.have.string('You need to pass the callback param.');
+          done();
+        });
+    });
+  });
 });
