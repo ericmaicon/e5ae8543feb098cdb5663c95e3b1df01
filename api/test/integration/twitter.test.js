@@ -71,4 +71,19 @@ describe('routes: twitter', () => {
         });
     });
   });
+
+  describe('POST /disconnect', () => {
+    it('should be disconnected from Twitter and receive a response with my Twitter ID for confirmation', done => {
+      chai.request(server)
+        .post('/disconnect')
+        .set('oauth_token', 'UkM5UQAAAAAA4EWgAAABYQb5rDU')
+        .end((error, response) => {
+          should.not.exist(error);
+          response.status.should.eql(200);
+          response.type.should.eql('application/json');
+          response.body.data.to.be.an('array');
+          done();
+        });
+    });
+  });
 });
