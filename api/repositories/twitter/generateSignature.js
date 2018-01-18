@@ -8,7 +8,7 @@ const fp = require('lodash/fp');
  *
  * @type string
  */
-module.exports = (url, method, params, secretKey, tokenSecret = '') => {
+module.exports = (url, method, params, secretKey, oauthToken = '') => {
   if (!url || !method || !params || !secretKey) {
     return '';
   }
@@ -19,7 +19,7 @@ module.exports = (url, method, params, secretKey, tokenSecret = '') => {
    * encoded consumer secret, followed by an ampersand character ‘&’,
    * followed by the percent encoded token secret:
    */
-  const key = `${secretKey}&${tokenSecret}`;
+  const key = `${secretKey}&${oauthToken}`;
 
   /**
    * Percent encode every key and value that will be signed.

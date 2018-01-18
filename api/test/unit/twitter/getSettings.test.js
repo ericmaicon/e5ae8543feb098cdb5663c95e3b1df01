@@ -1,16 +1,16 @@
 const { expect } = require('chai');
-const { verifyCredentials } = require('../../../repositories/twitter/');
+const { getSettings } = require('../../../repositories/twitter/');
 
-describe('verifyCredentials', () => {
+describe('getSettings', () => {
   it('should pass oauthParam as param', done => {
-    verifyCredentials().catch(error => {
+    getSettings().catch(error => {
       expect(error).to.equal('You need to pass the oauthToken and oauthVerifier params.');
       done();
     });
   });
 
-  it('should fetch verify_credentials.', done => {
-    verifyCredentials(
+  it('should fetch settings.', done => {
+    getSettings(
       'NPcudxy0yU5T3tBzho7iCotZ3cnetKwcTIRlX0iwRl0',
       'uw7NjWHT6OJ1MpJOXsHfNxoAhPKpgI8BlYDhxEjIBY'
     )

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import { loginReducer as login } from 'features/login/login';
+import { myAccountReducer as myAccount } from 'features/myAccount/myAccount';
 
 export default combineReducers({
-  login
+  myAccount
 });

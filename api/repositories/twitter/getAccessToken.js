@@ -1,6 +1,7 @@
 const request = require('request');
+const queryString = require('query-string');
 
-const generateOauthHeader = require('./generateOauthHeader');
+const { generateOauthHeader, parseToString } = require('./generateOauthHeader');
 
 module.exports = (oauthToken, oauthVerifier) => {
   return new Promise((resolve, reject) => {
@@ -14,7 +15,7 @@ module.exports = (oauthToken, oauthVerifier) => {
     const formData = {
       oauth_verifier: oauthVerifier
     };
-    const authorizationHeader = generateOauthHeader(url, method, {
+    const authorizationHeader = generateOauthHeader(url, method, '', {
       oauth_token: oauthToken
     }, formData);
 
@@ -22,13 +23,14 @@ module.exports = (oauthToken, oauthVerifier) => {
       url,
       method,
       headers: {
-        Authorization: authorizationHeader,
+        Authorization: parseToString(authorizationHeader),
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify(formData)
     }, (error, response, body) => {
       if (!error && response.statusCode == 200) {
-        resolve(body);
+        const bodyParsed = queryString.parse(body);
+        resolve(bodyParsed);
       } else {
         reject(body);
       }

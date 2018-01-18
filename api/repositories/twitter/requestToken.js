@@ -1,6 +1,6 @@
 const request = require('request');
 
-const generateOauthHeader = require('./generateOauthHeader');
+const { generateOauthHeader, parseToString } = require('./generateOauthHeader');
 
 /**
  * Method to request token from Twitter
@@ -17,15 +17,15 @@ module.exports = (callback) => {
 
     const url = 'https://api.twitter.com/oauth/request_token';
     const method = 'post';
-    const authorizationHeader = generateOauthHeader(url, method, {
-      oauth_callback: encodeURIComponent(callback)
+    const authorizationHeader = generateOauthHeader(url, method, '', {
+      oauth_callback: callback
     });
 
     request({
       url,
       method,
       headers: {
-        Authorization: authorizationHeader
+        Authorization: parseToString(authorizationHeader)
       }
     }, (error, response, body) => {
       if (!error && response.statusCode == 200) {

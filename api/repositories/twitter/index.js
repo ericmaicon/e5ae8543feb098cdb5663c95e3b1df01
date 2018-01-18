@@ -4,7 +4,7 @@ module.exports = {
   generateOauthHeader: require('./generateOauthHeader'),
   generateSignature: require('./generateSignature'),
   getAccessToken: require('./getAccessToken'),
+  getSettings: require('./getSettings'),
+  getTimeline: require('./getTimeline'),
   requestToken: require('./requestToken'),
-  timeline: require('./timeline'),
-  verifyCredentials: require('./verifyCredentials'),
 };

@@ -1,4 +1,9 @@
-const { requestToken, verifyCredentials, timeline } = require('../repositories/twitter/');
+const {
+  requestToken,
+  getSettings,
+  getTimeline,
+  getAccessToken
+} = require('../repositories/twitter/');
 
 module.exports = (app, router) => {
   //GET oauth_request
@@ -21,35 +26,52 @@ module.exports = (app, router) => {
 
   //POST /connect
   router.post('/connect', async function (context) {
-    const { oauth_token, oauth_verifier } = context.request.body;
 
-    if (!oauth_token || !oauth_verifier) {
-      context.status = 422;
+    let oauth_token = context.headers['oauth_token'];
+    let oauth_token_secret = context.headers['oauth_token_secret'];
+    let { oauth_verifier } = context.request.body;
+
+    if (!oauth_token_secret) {
+        const accessData = await getAccessToken(
+          context.request.body.oauth_token,
+          oauth_verifier
+        );
+        oauth_token = accessData.oauth_token;
+        oauth_token_secret = accessData.oauth_token_secret;
+    }
+
+    if (!oauth_token || !oauth_token_secret) {
+      context.status = 400;
       context.body = {
-        error: 'You need to pass the oauth_token AND oauth_verifier data.'
+        error: 'You have invalid credentials. Please, get logged in again.'
       };
       return;
     }
 
-    const credentialData = await verifyCredentials(oauth_token, oauth_verifier);
+    const credentialData = await getSettings(oauth_token, oauth_token_secret);
+
     context.body = {
-      data: credentialData
+      data: credentialData,
+      token: {
+        oauth_token,
+        oauth_token_secret
+      }
     };
   });
 
   //GET /tweets
   router.get('/tweets', async function (context) {
     const oauth_token = context.headers['oauth_token'];
+    const oauth_token_secret = context.headers['oauth_token_secret'];
 
-    if (!oauth_token) {
+    if (!oauth_token || !oauth_token_secret) {
       context.status = 422;
       context.body = {
-        error: 'You need to pass the oauth_token in oauth_token header.'
+        error: 'You need to pass the oauth_token in oauth_token_secret header.'
       };
       return;
     }
-
-    const tweets = await timeline(oauth_token);
+    const tweets = await getTimeline(oauth_token, oauth_token_secret);
     context.body = {
       data: tweets
     };

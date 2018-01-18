@@ -6,11 +6,12 @@ const generateSignature = require('./generateSignature');
  *
  * @param  string url endpoint that will be hit
  * @param  string method the HTTP method
+ * @param  object oauthToken token used to generate signature
  * @param  object extraHeaders to be included in the header
  * @param  object formData used to calculate signature
  * @return string
  */
-module.exports = (url, method, extraHeaders = {}, formData = {}) => {
+function generateOauthHeader(url, method, oauthToken = '', extraHeaders = {}, formData = {}) {
   if (!url || !method) {
     return '';
   }
@@ -27,9 +28,14 @@ module.exports = (url, method, extraHeaders = {}, formData = {}) => {
     url,
     method,
     Object.assign(authObject, formData),
-    process.env.TWITTER_SECRET_KEY
+    process.env.TWITTER_SECRET_KEY,
+    oauthToken
   );
 
+  return authObject;
+}
+
+function parseToString(authObject) {
   let authorizationHeader = 'OAuth ';
   Object.keys(authObject).map((key) => {
     const value = encodeURIComponent(authObject[key]);
@@ -37,4 +43,9 @@ module.exports = (url, method, extraHeaders = {}, formData = {}) => {
   });
 
   return authorizationHeader.substr(0, authorizationHeader.length-1);
+}
+
+module.exports = {
+  generateOauthHeader,
+  parseToString
 };

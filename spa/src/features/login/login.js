@@ -5,15 +5,11 @@ export const LOGIN = 'login/fetch';
 export const LOGIN_DONE = `${LOGIN}/done`;
 export const LOGIN_FAIL = `${LOGIN}/fail`;
 
-export function loginReducer(state = { }, action) {
-  return state;
-}
-
 export function logIn() {
   return {
     type: LOGIN,
     params: {
-      'callback_url': 'http://localhost:8080/success'
+      'callback_url': 'http://localhost:8080/panel'
     }
   };
 }
