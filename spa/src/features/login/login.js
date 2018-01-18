@@ -13,7 +13,7 @@ export function logIn() {
   return {
     type: LOGIN,
     params: {
-      'callback_url': 'http://localhost:8080'
+      'callback_url': 'http://localhost:8080/success'
     }
   };
 }
@@ -25,6 +25,6 @@ export const loginSaga = createApiSaga(LOGIN, {
 export function* loginDoneSaga() {
   while(true) {
     const { response } = yield take(LOGIN_DONE);
-    window.open(response.data, 'sharer', 'toolbar=0,status=0,width=548,height=325');
+    window.location = response.data;
   }
 }
