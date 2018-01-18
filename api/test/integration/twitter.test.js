@@ -45,8 +45,8 @@ describe('routes: twitter', () => {
       chai.request(server)
         .post('/connect')
         .send({
-          'oauth_token': 'NPcudxy0yU5T3tBzho7iCotZ3cnetKwcTIRlX0iwRl0',
-          'oauth_verifier': 'uw7NjWHT6OJ1MpJOXsHfNxoAhPKpgI8BlYDhxEjIBY'
+          'oauth_token': 'UkM5UQAAAAAA4EWgAAABYQb5rDU',
+          'oauth_verifier': 'j6ajuauSIDPVJC3O2zNlLz9PUz8G7j5e'
         })
         .end((error, response) => {
           response.status.should.eql(200);

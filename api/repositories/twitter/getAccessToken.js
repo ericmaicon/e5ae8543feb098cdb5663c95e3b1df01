@@ -2,13 +2,6 @@ const request = require('request');
 
 const generateOauthHeader = require('./generateOauthHeader');
 
-/**
- * this method verify and get the data from twitter user
- *
- * @param  string oauthToken
- * @param  string oauthVerifier
- * @return object the user data
- */
 module.exports = (oauthToken, oauthVerifier) => {
   return new Promise((resolve, reject) => {
     if (!oauthToken || !oauthVerifier) {
@@ -16,8 +9,8 @@ module.exports = (oauthToken, oauthVerifier) => {
       return;
     }
 
-    const url = 'https://api.twitter.com/1.1/account/verify_credentials.json';
-    const method = 'get';
+    const url = 'https://api.twitter.com/oauth/access_token';
+    const method = 'post';
     const formData = {
       oauth_verifier: oauthVerifier
     };
