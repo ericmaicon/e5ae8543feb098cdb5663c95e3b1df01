@@ -1,21 +1,26 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import PanelContainer from './PanelContainer';
 
-
 describe('Panel', () => {
   const mockStore = configureStore([]);
-  const store = mockStore({});
-  const Panel = mount(
-    <Provider store={store}>
-      <PanelContainer />
-    </Provider>
-  );
+  const store = mockStore({
+    myAccount: {
+      user: null
+    },
+    tweet: {
+      tweets: []
+    }
+  });
 
   it('renders properly', () => {
-    expect(Panel).toMatchSnapshot();
+    const div = document.createElement('div');
+    ReactDOM.render(
+      <Provider store={store}>
+        <PanelContainer />
+      </Provider>, div);
   });
 });

@@ -1,10 +1,14 @@
 import React from 'react';
 
+import TweetContainer from 'features/tweet/TweetContainer';
+
 const PanelForm = ({
-  user
+  user,
+  tweets,
+  handleFetchTweets
 }) => (
   <div className='container panel-container'>
-    <div className='card' style={{
+    <div className='card card-header' style={{
       backgroundImage: `url(${user.profile_background_image_url})`
     }}>
       <img src={user.profile_image_url} className='rounded mx-auto d-block' />
@@ -14,6 +18,7 @@ const PanelForm = ({
         <a
           className='btn btn-primary'
           href='javascript:;'
+          onClick={handleFetchTweets}
         >
           Refresh
         </a>
@@ -25,8 +30,17 @@ const PanelForm = ({
         </a>
       </div>
     </div>
-    <div className='card'>
-    </div>
+    {tweets.length > 0 && tweets.map(tweet =>
+      <TweetContainer
+        tweet={tweet}
+        key={tweet.id}
+      />
+    )}
+    {tweets.length === 0 && (
+      <div className='card card-content'>
+        <p>Press Refresh button to fetch your tweets.</p>
+      </div>
+    )}
   </div>
 );
 
