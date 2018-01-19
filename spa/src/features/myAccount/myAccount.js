@@ -1,6 +1,8 @@
-import { take } from 'redux-saga/effects';
+import { take, put } from 'redux-saga/effects';
+import swal from 'sweetalert';
 
 import history from 'browserHistory';
+import { fetchTweets } from 'features/tweet/tweet';
 import createApiSaga from 'utils/sagas/createApiSaga';
 import { setToken, dropToken } from 'utils/auth/tokenManager';
 
@@ -13,7 +15,7 @@ export const LOGOUT_DONE = `${LOGOUT}/done`;
 
 /**
  * Reducer to map user data
- * 
+ *
  * @param  object state
  * @param  object action
  * @return object
@@ -66,6 +68,7 @@ export function* fetchMeDoneSaga() {
   while(true) {
     const { response } = yield take(FETCH_ME_DONE);
     setToken(response.token.oauth_token, response.token.oauth_token_secret);
+    yield put(fetchTweets());
   }
 }
 
@@ -78,6 +81,7 @@ export function* fetchMeFailSaga() {
   while(true) {
     const { response } = yield take(FETCH_ME_FAIL);
     history.push('/');
+    swal('Ops!', 'Seems that you are not logged in.', 'error');
     dropToken();
   }
 }

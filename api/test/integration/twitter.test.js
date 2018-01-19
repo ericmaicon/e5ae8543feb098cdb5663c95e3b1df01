@@ -120,4 +120,31 @@ describe('routes: twitter', () => {
         });
     });
   });
+
+  describe('POST /tweet', () => {
+    beforeEach(() => {
+      nock('https://api.twitter.com/1.1/statuses')
+        .post('/update.json')
+        .query(true)
+        .reply(200, () => {
+          return JSON.stringify('{id: ""}');
+        });
+    });
+
+    it('should tweet a message', done => {
+      chai.request(server)
+        .post('/tweet')
+        .send({
+          status: 'foo'
+        })
+        .set('oauth_token', '847261432928284673-1rHwNheApKthM5xShodCUfZ6ItzDqHt')
+        .set('oauth_token_secret', '2xMUKPsdq3HzHznKgWrD08IL6wa7K3QhbxIO3x5C1Jmpd')
+        .end((error, response) => {
+          should.not.exist(error);
+          response.status.should.eql(200);
+          response.type.should.eql('application/json');
+          done();
+        });
+    });
+  });
 });

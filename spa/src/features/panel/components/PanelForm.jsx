@@ -1,6 +1,7 @@
 import React from 'react';
 
 import TweetContainer from 'features/tweet/TweetContainer';
+import CreateTweetContainer from 'features/createTweet/CreateTweetContainer';
 
 const PanelForm = ({
   user,
@@ -33,6 +34,7 @@ const PanelForm = ({
         </a>
       </div>
     </div>
+    <CreateTweetContainer />
     {tweets.length > 0 && tweets.map(tweet =>
       <TweetContainer
         tweet={tweet}

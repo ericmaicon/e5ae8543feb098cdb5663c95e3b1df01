@@ -5,4 +5,5 @@ module.exports = {
   getSettings: require('./getSettings'),
   getTimeline: require('./getTimeline'),
   requestToken: require('./requestToken'),
+  updateStatus: require('./updateStatus'),
 };

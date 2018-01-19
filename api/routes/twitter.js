@@ -2,7 +2,8 @@ const {
   requestToken,
   getSettings,
   getTimeline,
-  getAccessToken
+  getAccessToken,
+  updateStatus
 } = require('../repositories/twitter/');
 
 module.exports = (app, router) => {
@@ -66,7 +67,7 @@ module.exports = (app, router) => {
     if (!oauth_token || !oauth_token_secret) {
       context.status = 422;
       context.body = {
-        error: 'You need to pass the oauth_token in oauth_token_secret header.'
+        error: 'You need to pass the oauth_token and oauth_token_secret header.'
       };
       return;
     }
@@ -84,7 +85,7 @@ module.exports = (app, router) => {
     if (!oauth_token || !oauth_token_secret) {
       context.status = 422;
       context.body = {
-        error: 'You need to pass the oauth_token in oauth_token_secret header.'
+        error: 'You need to pass the oauth_token and oauth_token_secret header.'
       };
       return;
     }
@@ -92,6 +93,34 @@ module.exports = (app, router) => {
     const credentialData = await getSettings(oauth_token, oauth_token_secret);
     context.body = {
       data: credentialData.id
+    };
+  });
+
+  //POST /tweet
+  router.post('/tweet', async function (context) {
+    const oauth_token = context.headers['oauth_token'];
+    const oauth_token_secret = context.headers['oauth_token_secret'];
+    const { status } = context.request.body;
+
+    if (!oauth_token || !oauth_token_secret) {
+      context.status = 422;
+      context.body = {
+        error: 'You need to pass the oauth_token and oauth_token_secret header.'
+      };
+      return;
+    }
+
+    if (!status) {
+      context.status = 422;
+      context.body = {
+        error: 'You need to pass a status.'
+      };
+      return;
+    }
+
+    const response = await updateStatus(oauth_token, oauth_token_secret, status);
+    context.body = {
+      data: response
     };
   });
 };
