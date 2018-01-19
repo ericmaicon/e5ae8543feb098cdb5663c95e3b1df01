@@ -1,10 +1,21 @@
 const { expect } = require('chai');
+const nock = require('nock');
+
 const { getSettings } = require('../../../repositories/twitter/');
 
 describe('getSettings', () => {
+  beforeEach(() => {
+    nock('https://api.twitter.com/1.1/account')
+      .get('/verify_credentials.json')
+      .query(true)
+      .reply(200, () => {
+        return JSON.stringify('{name: ""}');
+      });
+  });
+
   it('should pass oauthParam as param', done => {
     getSettings().catch(error => {
-      expect(error).to.equal('You need to pass the oauthToken and oauthVerifier params.');
+      expect(error).to.equal('You need to pass the oauthToken and oauthTokenSecret params.');
       done();
     });
   });
@@ -15,7 +26,7 @@ describe('getSettings', () => {
       'uw7NjWHT6OJ1MpJOXsHfNxoAhPKpgI8BlYDhxEjIBY'
     )
       .then(accountSettings => {
-        expect(accountSettings.screen_name).to.match(/\w/);
+        expect(accountSettings).to.have.string('name');
         done();
       });
   });

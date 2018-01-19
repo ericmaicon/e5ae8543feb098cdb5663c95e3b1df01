@@ -2,14 +2,14 @@ const generateNonce = require('./generateNonce');
 const generateSignature = require('./generateSignature');
 
 /**
- * generate oauth header
+ * generate oauth header object
  *
  * @param  string url endpoint that will be hit
  * @param  string method the HTTP method
  * @param  object oauthToken token used to generate signature
  * @param  object extraHeaders to be included in the header
  * @param  object formData used to calculate signature
- * @return string
+ * @return object
  */
 function generateOauthHeader(url, method, oauthToken = '', extraHeaders = {}, formData = {}) {
   if (!url || !method) {
@@ -35,6 +35,11 @@ function generateOauthHeader(url, method, oauthToken = '', extraHeaders = {}, fo
   return authObject;
 }
 
+/**
+ * get the oauth header object and convert to a string
+ * @param  object authObject
+ * @return string
+ */
 function parseToString(authObject) {
   let authorizationHeader = 'OAuth ';
   Object.keys(authObject).map((key) => {

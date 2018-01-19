@@ -3,7 +3,7 @@ const request = require('request');
 const { generateOauthHeader, parseToString } = require('./generateOauthHeader');
 
 /**
- * this method get data from twitter user
+ * this method get user twitter profile data
  *
  * @param  string oauthToken
  * @param  string oauthTokenSecret

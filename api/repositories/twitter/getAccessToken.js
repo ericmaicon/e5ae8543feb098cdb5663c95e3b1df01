@@ -3,6 +3,14 @@ const queryString = require('query-string');
 
 const { generateOauthHeader, parseToString } = require('./generateOauthHeader');
 
+/**
+ * Allows a Consumer application to exchange the OAuth Request Token for an
+ * OAuth Access Token.
+ *
+ * @param  string oauthToken
+ * @param  string oauthVerifier
+ * @return object
+ */
 module.exports = (oauthToken, oauthVerifier) => {
   return new Promise((resolve, reject) => {
     if (!oauthToken || !oauthVerifier) {

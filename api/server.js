@@ -19,8 +19,8 @@ require('./routes/index.js')(app, router);
 const server = app
   .use(KoaCors())
   .use(KoaBody({
-      jsonLimit: '100kb'
-    }))
+    jsonLimit: '100kb'
+  }))
   .use(router.routes())
   .use(async function (context) {
     context.body = 'API';

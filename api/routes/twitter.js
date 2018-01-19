@@ -2,7 +2,8 @@ const {
   requestToken,
   getSettings,
   getTimeline,
-  getAccessToken
+  getAccessToken,
+  invalidateToken
 } = require('../repositories/twitter/');
 
 module.exports = (app, router) => {
@@ -31,13 +32,13 @@ module.exports = (app, router) => {
     let oauth_token_secret = context.headers['oauth_token_secret'];
     let { oauth_verifier } = context.request.body;
 
-    if (!oauth_token_secret) {
-        const accessData = await getAccessToken(
-          context.request.body.oauth_token,
-          oauth_verifier
-        );
-        oauth_token = accessData.oauth_token;
-        oauth_token_secret = accessData.oauth_token_secret;
+    if (!oauth_token_secret && context.request.body.oauth_token) {
+      const accessData = await getAccessToken(
+        context.request.body.oauth_token,
+        oauth_verifier
+      );
+      oauth_token = accessData.oauth_token;
+      oauth_token_secret = accessData.oauth_token_secret;
     }
 
     if (!oauth_token || !oauth_token_secret) {
@@ -74,6 +75,25 @@ module.exports = (app, router) => {
     const tweets = await getTimeline(oauth_token, oauth_token_secret);
     context.body = {
       data: tweets
+    };
+  });
+
+  //POST /disconnect
+  router.post('/disconnect', async function (context) {
+    const oauth_token = context.headers['oauth_token'];
+    const oauth_token_secret = context.headers['oauth_token_secret'];
+
+    if (!oauth_token || !oauth_token_secret) {
+      context.status = 422;
+      context.body = {
+        error: 'You need to pass the oauth_token in oauth_token_secret header.'
+      };
+      return;
+    }
+    const credentialData = await getSettings(oauth_token, oauth_token_secret);
+    await invalidateToken(oauth_token, oauth_token_secret);
+    context.body = {
+      data: credentialData.id
     };
   });
 };

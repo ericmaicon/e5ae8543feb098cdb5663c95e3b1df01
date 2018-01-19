@@ -2,33 +2,42 @@ const request = require('request');
 
 const { generateOauthHeader, parseToString } = require('./generateOauthHeader');
 
+/**
+ * get user tweets
+ *
+ * @param  string oauthToken
+ * @param  string oauthTokenSecret
+ * @param  string count
+ * @return object
+ */
 module.exports = (oauthToken, oauthTokenSecret, count = 100) => {
   return new Promise((resolve, reject) => {
     if (!oauthToken) {
-      reject('You need to pass the oauthToken param.');
+      reject('You need to pass the oauthToken and oauthTokenSecret param.');
       return;
     }
 
-    const url = 'https://api.twitter.com/1.1/statuses/home_timeline.json';
+    const url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
     const method = 'get';
     const authorizationHeader = generateOauthHeader(url, method, oauthTokenSecret, {
-      oauth_token: oauthToken
+      oauth_token: oauthToken,
+      count
     });
 
     request({
       url,
       method,
       qs: Object.assign(authorizationHeader, {
+        count
       }),
       headers: {
         Authorization: parseToString(authorizationHeader),
       },
     }, (error, response, body) => {
-      console.log(response);
+      const parsedBody = JSON.parse(body);
       if (!error && response.statusCode == 200) {
-        resolve(body);
+        resolve(parsedBody);
       } else {
-        const parsedBody = JSON.parse(body);
         reject(parsedBody.errors);
       }
     });

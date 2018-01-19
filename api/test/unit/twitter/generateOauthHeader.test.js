@@ -1,5 +1,8 @@
 const { expect } = require('chai');
-const { generateOauthHeader } = require('../../../repositories/twitter');
+const {
+  generateOauthHeader,
+  parseToString
+} = require('../../../repositories/twitter/generateOauthHeader');
 
 describe('generateOauthHeader', () => {
   it('return empty if there is no param', done => {
@@ -14,7 +17,7 @@ describe('generateOauthHeader', () => {
       'post',
       'http://localhost'
     );
-    expect(oauthHeader).to.match(/\w/);
+    expect(parseToString(oauthHeader)).to.match(/\w/);
     done();
   });
 });
