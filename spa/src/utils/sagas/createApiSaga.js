@@ -24,7 +24,6 @@ export default (actionString, httpSpecParam) => {
         }
 
         const response = yield call(axios, {
-          baseURL: APP.API_URL,
           url: httpSpec.path,
           method: httpSpec.method || 'GET',
           params: action.params,

@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { Router, Route, Switch } from 'react-router-dom';
 
 import 'styles/main.scss';
+import './interceptors';
 import store from './store';
 import history from 'browserHistory';
 import LoginContainer from 'features/login/LoginContainer';

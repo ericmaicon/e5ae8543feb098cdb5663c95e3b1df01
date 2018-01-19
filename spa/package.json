@@ -26,6 +26,7 @@
     "validate.js": "^0.12.0"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.11.0",
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-polyfill": "^6.26.0",
@@ -45,6 +46,7 @@
     "nodemon": "^1.14.11",
     "react-hot-loader": "^3.1.3",
     "redux-mock-store": "^1.4.0",
+    "redux-saga-tester": "^1.0.378",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
     "url-loader": "^0.6.2",
@@ -62,6 +64,10 @@
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif)$": "<rootDir>/tests/assetsTransformer.js",
       "\\.(css|less)$": "<rootDir>/assetsTransformer.js"
-    }
+    },
+    "setupFiles": [
+      "<rootDir>/tests/setup.js",
+      "<rootDir>/tests/localStorage.js"
+    ]
   }
 }

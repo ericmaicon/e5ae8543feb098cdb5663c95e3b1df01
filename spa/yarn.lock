@@ -310,6 +310,12 @@ aws4@^1.2.1, aws4@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
 
+axios-mock-adapter@^1.11.0:
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/axios-mock-adapter/-/axios-mock-adapter-1.11.0.tgz#96e4bb2702cf6900f2ae5f9bdbef6e5dc86669e2"
+  dependencies:
+    deep-equal "^1.0.1"
+
 axios@^0.17.1:
   version "0.17.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.17.1.tgz#2d8e3e5d0bdbd7327f91bc814f5c57660f81824d"
@@ -5670,6 +5676,10 @@ redux-mock-store@^1.4.0:
   resolved "https://registry.yarnpkg.com/redux-mock-store/-/redux-mock-store-1.4.0.tgz#cdc87650f5759f293588fecc9cac2b057d95190d"
   dependencies:
     lodash.isplainobject "^4.0.6"
+
+redux-saga-tester@^1.0.378:
+  version "1.0.378"
+  resolved "https://registry.yarnpkg.com/redux-saga-tester/-/redux-saga-tester-1.0.378.tgz#859781a6da28a629e3a355432ee02e384e3d066d"
 
 redux-saga@^0.16.0:
   version "0.16.0"
