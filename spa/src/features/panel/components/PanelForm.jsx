@@ -5,7 +5,8 @@ import TweetContainer from 'features/tweet/TweetContainer';
 const PanelForm = ({
   user,
   tweets,
-  handleFetchTweets
+  handleFetchTweets,
+  handleDisconnect
 }) => (
   <div className='container panel-container'>
     <div className='card card-header' style={{
@@ -13,6 +14,7 @@ const PanelForm = ({
     }}>
       <img src={user.profile_image_url} className='rounded mx-auto d-block' />
       <h3>{user.name}</h3>
+      <p>{user.screen_name}</p>
       <p>{user.location}</p>
       <div className='btn-group'>
         <a
@@ -20,11 +22,12 @@ const PanelForm = ({
           href='javascript:;'
           onClick={handleFetchTweets}
         >
-          Refresh
+          Refresh Tweets
         </a>
         <a
           className='btn btn-secondary'
           href='javascript:;'
+          onClick={handleDisconnect}
         >
           Logout
         </a>

@@ -4,6 +4,12 @@ import { take, call, put, select } from 'redux-saga/effects';
 
 import { hasToken, getToken } from 'utils/auth/tokenManager';
 
+/**
+ * method that creates a saga to hit the api using axios
+ *
+ * @param  {string} actionString
+ * @param  {object} httpSpecParam
+ */
 export default (actionString, httpSpecParam) => {
   return function* () {
     while (true) {

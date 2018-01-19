@@ -5,7 +5,7 @@ import { branch, compose, lifecycle, renderNothing, withHandlers } from 'recompo
 
 import history from 'browserHistory';
 import PanelForm from './components/PanelForm';
-import { fetchMe } from 'features/myAccount/myAccount';
+import { fetchMe, logOut } from 'features/myAccount/myAccount';
 import { fetchTweets } from 'features/tweet/tweet';
 
 const queryObject = queryString.parse(history.location.search);
@@ -18,6 +18,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
+  logOut,
   fetchMe,
   fetchTweets
 };
@@ -34,8 +35,7 @@ export default compose(
   }),
   branch(({ user }) => !user, renderNothing),
   withHandlers({
-    handleFetchTweets: ({ fetchTweets }) => () => {
-      fetchTweets();
-    }
+    handleFetchTweets: ({ fetchTweets }) => () => fetchTweets(),
+    handleDisconnect: ({ logOut }) => () => logOut()
   })
 )(PanelForm);
