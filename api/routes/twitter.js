@@ -2,8 +2,7 @@ const {
   requestToken,
   getSettings,
   getTimeline,
-  getAccessToken,
-  invalidateToken
+  getAccessToken
 } = require('../repositories/twitter/');
 
 module.exports = (app, router) => {
@@ -27,7 +26,6 @@ module.exports = (app, router) => {
 
   //POST /connect
   router.post('/connect', async function (context) {
-
     let oauth_token = context.headers['oauth_token'];
     let oauth_token_secret = context.headers['oauth_token_secret'];
     let { oauth_verifier } = context.request.body;
@@ -90,8 +88,8 @@ module.exports = (app, router) => {
       };
       return;
     }
+
     const credentialData = await getSettings(oauth_token, oauth_token_secret);
-    await invalidateToken(oauth_token, oauth_token_secret);
     context.body = {
       data: credentialData.id
     };
