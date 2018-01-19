@@ -23,7 +23,7 @@ TWITTER_CONSUMER_KEY=123
 TWITTER_SECRET_KEY=123
 ~~~
 
-Check your consumer and secret key on [apps.twitter.com](apps.twitter.com).
+Check your consumer and secret key on [https://apps.twitter.com](https://apps.twitter.com).
 
 ## Usage
 
