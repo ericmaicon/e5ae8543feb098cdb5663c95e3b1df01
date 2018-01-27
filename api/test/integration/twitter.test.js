@@ -12,6 +12,12 @@ describe('routes: twitter', () => {
   });
 
   describe('GET /oauth_request', () => {
+    beforeEach(() => {
+      nock('https://api.twitter.com/oauth/')
+        .post('/request_token')
+        .reply(200, 'oauth_token=x87YjQAAAAAA4EWgAAABYTmcFV4&oauth_token_secret=mwE8HxaziqFYdGOHtKqA0SFG9Xx5nBs&oauth_callback_confirmed=true');
+    });
+
     it('should have an error message', done => {
       chai.request(server)
         .get('/oauth_request')
